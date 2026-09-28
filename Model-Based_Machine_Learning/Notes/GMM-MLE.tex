@@ -1,0 +1,185 @@
+\section{GMM \& MLE}
+
+\subsection{Gaussian Mixture Model (GMM)}
+
+A \hl{Gaussian Mixture Model} assumes that each group has a multivariate
+Gaussian distribution:
+
+$$
+\boxed{
+\mathbf{X}\mid Z=k
+\sim
+\mathcal{N}(\boldsymbol{\mu}_k,\Sigma_k)
+}
+$$
+
+Thus,
+
+$$
+f_k(\mathbf{x})
+=
+\mathcal{N}(\mathbf{x};
+\boldsymbol{\mu}_k,\Sigma_k).
+$$
+
+The marginal mixture density is
+
+$$
+\boxed{
+f(\mathbf{x})
+=
+\sum_{k=1}^K
+p_k\mathcal{N}(\mathbf{x};
+\boldsymbol{\mu}_k,\Sigma_k)
+}
+$$
+
+Each group is characterized by
+
+$$
+\boxed{
+p_k,\quad\boldsymbol{\mu}_k,\quad\Sigma_k
+}
+$$
+
+where $p_k$ is the mixing proportion, $\boldsymbol{\mu}_k$ the mean, and
+$\Sigma_k$ the covariance matrix.
+
+\subsection{Maximum Likelihood Estimation (MLE)}
+
+Given observations $\mathbf{x}_1,\ldots,\mathbf{x}_n$, MLE chooses the
+parameters that make the observed data most likely:
+
+$$
+\boxed{
+\hat{\theta}
+=
+\arg\max_\theta L(\theta)
+}
+$$
+
+where the likelihood is
+
+$$
+L(\theta)
+=
+\prod_{i=1}^n f(\mathbf{x}_i;\theta).
+$$
+
+\subsection{Log-Likelihood}
+
+Because products are difficult to optimize, we use the logarithm:
+
+$$
+\boxed{
+\ell(\theta)
+=
+\log L(\theta)
+=
+\sum_{i=1}^n
+\log f(\mathbf{x}_i;\theta)
+}
+$$
+
+Since $\log$ is increasing,
+
+$$
+\arg\max_\theta L(\theta)
+=
+\arg\max_\theta\ell(\theta).
+$$
+
+\subsection{Empirical Estimates}
+
+If the group memberships are known, let
+
+$$
+\tilde Z_{ik}=
+\begin{cases}
+1 & \text{if observation }i\text{ belongs to group }k,\\
+0 & \text{otherwise.}
+\end{cases}
+$$
+
+Then
+
+$$
+n_k=\sum_{i=1}^n\tilde Z_{ik}
+$$
+
+is the number of observations in group $k$.
+
+The usual empirical estimates are
+
+$$
+\boxed{
+\hat p_k=\frac{n_k}{n}
+}
+$$
+
+$$
+\boxed{
+\hat{\boldsymbol{\mu}}_k
+=
+\frac{1}{n_k}
+\sum_{i=1}^n
+\tilde Z_{ik}\mathbf{x}_i
+}
+$$
+
+and
+
+$$
+\boxed{
+\hat\Sigma_k
+=
+\frac{1}{n_k}
+\sum_{i=1}^n
+\tilde Z_{ik}
+(\mathbf{x}_i-\hat{\boldsymbol{\mu}}_k)
+(\mathbf{x}_i-\hat{\boldsymbol{\mu}}_k)^T
+}
+$$
+
+\textbf{Important:} These estimates assume that the group memberships
+$\tilde Z_{ik}$ are known. In unsupervised GMM clustering, the memberships
+are unknown and must be estimated, which leads to methods such as
+Expectation-Maximization (EM).
+
+\subsection{Key Connections}
+
+$$
+\boxed{
+\text{GMM}
+\rightarrow
+p_k,f_k(\mathbf{x})
+\rightarrow
+P(Z=k\mid\mathbf{x})
+\rightarrow
+\text{classification}
+\rightarrow
+\text{risk}
+\rightarrow
+\text{Bayes optimal rule}
+}
+$$
+
+$$
+\boxed{
+\text{MLE}
+\rightarrow
+\text{estimate }p_k,\boldsymbol{\mu}_k,\Sigma_k
+\rightarrow
+\text{fit the GMM}
+}
+$$
+
+\textbf{Memory aids:}
+\begin{itemize}
+\item \textbf{Classification rule:} ``Which group do I assign $\mathbf{x}$ to?''
+    \item \textbf{Risk:} ``How costly is my decision?''
+\item \textbf{Bayes rule:} ``Choose the decision with the smallest expected cost.''
+    \item \textbf{Equal costs:} ``Choose the group with the highest posterior probability.''
+\item \textbf{GMM:} ``Each group is a Gaussian with its own $p_k,\mu_k,\Sigma_k$.''
+    \item \textbf{MLE:} ``Choose parameters that make the observed data most likely.''
+\end{itemize}

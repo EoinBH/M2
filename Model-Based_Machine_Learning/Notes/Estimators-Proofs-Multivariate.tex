@@ -1,0 +1,704 @@
+\section{Proofs of Estimators (Multivariate GMM - Classification)}
+
+We now consider the multivariate case, where each observation has
+$p$ features.
+
+For $p>1$, we consider a \hl{multivariate Gaussian mixture model}:
+\begin{equation*}
+X\mid Z=k
+\sim
+\mathcal{N}_p(\boldsymbol{\mu}_k,\boldsymbol{\Sigma}_k),
+\qquad
+k=1,\ldots,K,
+\end{equation*}
+where
+\begin{equation*}
+\boldsymbol{\mu}_k\in\mathbb{R}^p
+\end{equation*}
+is the mean vector of group $k$ and
+\begin{equation*}
+\boldsymbol{\Sigma}_k\in\mathbb{R}^{p\times p}
+\end{equation*}
+is the covariance matrix of group $k$.
+
+Since $\boldsymbol{\Sigma}_k$ is a covariance matrix, it is symmetric
+positive definite:
+\begin{equation*}
+\boldsymbol{\Sigma}_k^\top
+=
+\boldsymbol{\Sigma}_k,
+\qquad
+\boldsymbol{\Sigma}_k\succ0.
+\end{equation*}
+
+The one-hot representation of the group variable is
+\begin{equation*}
+\tilde{Z}\sim\mathcal{M}(1,p_1,\ldots,p_K),
+\end{equation*}
+where
+\begin{equation*}
+p_k=P(Z=k),
+\qquad
+\sum_{k=1}^Kp_k=1.
+\end{equation*}
+
+The parameter vector is now
+\begin{equation*}
+\theta=
+\left(
+p_1,\ldots,p_K,
+\boldsymbol{\mu}_1,\ldots,\boldsymbol{\mu}_K,
+\boldsymbol{\Sigma}_1,\ldots,\boldsymbol{\Sigma}_K
+\right).
+\end{equation*}
+
+For group $k$, the multivariate Gaussian density is
+\begin{equation*}
+f_k(\boldsymbol{x})
+=
+\frac{1}
+{(2\pi)^{p/2}
+|\boldsymbol{\Sigma}_k|^{1/2}}
+\exp\left(
+-\frac{1}{2}
+(\boldsymbol{x}-\boldsymbol{\mu}_k)^\top
+\boldsymbol{\Sigma}_k^{-1}
+(\boldsymbol{x}-\boldsymbol{\mu}_k)
+\right).
+\end{equation*}
+
+We observe
+\begin{equation*}
+\underline{X}
+=
+(\boldsymbol{X}_1,\ldots,\boldsymbol{X}_n),
+\end{equation*}
+where
+\begin{equation*}
+\boldsymbol{X}_i\in\mathbb{R}^p,
+\end{equation*}
+and denote the corresponding group variables by
+\begin{equation*}
+\underline{Z}=(Z_1,\ldots,Z_n).
+\end{equation*}
+
+Using the one-hot representation $\tilde{Z}_{ik}$, where
+\begin{equation*}
+\tilde{Z}_{ik}
+=
+\begin{cases}
+1 & \text{if } Z_i=k,\\
+0 & \text{otherwise},
+\end{cases}
+\end{equation*}
+the complete-data log-likelihood is
+\begin{equation*}
+\ln L(\underline{X},Z,\theta)
+=
+\sum_{i=1}^{n}\sum_{k=1}^{K}
+\tilde{Z}_{ik}
+\left[
+\ln p_k
+-\frac{p}{2}\ln(2\pi)
+-\frac{1}{2}\ln|\boldsymbol{\Sigma}_k|
+-\frac{1}{2}
+(\boldsymbol{x}_i-\boldsymbol{\mu}_k)^\top
+\boldsymbol{\Sigma}_k^{-1}
+(\boldsymbol{x}_i-\boldsymbol{\mu}_k)
+\right].
+\end{equation*}
+
+We now derive the maximum likelihood estimators of the three types
+of parameters:
+\begin{equation*}
+p_k,\qquad
+\boldsymbol{\mu}_k,\qquad
+\boldsymbol{\Sigma}_k.
+\end{equation*}
+
+As in the univariate case, we treat the group memberships
+$Z_1,\ldots,Z_n$ as observed. Therefore, these are the
+\hl{complete-data maximum likelihood estimators}.
+
+
+%------------------------------------------------------------
+\subsection{Estimation of the Mixing Proportions $p_k$}
+%------------------------------------------------------------
+
+The mixing proportions satisfy the constraint
+\begin{equation*}
+\sum_{k=1}^Kp_k=1.
+\end{equation*}
+
+We therefore introduce a Lagrange multiplier $\lambda$ and define
+the Lagrangian
+\begin{equation*}
+F(\theta,\lambda)
+=
+\ln L(\underline{X},Z,\theta)
++
+\lambda
+\left(
+1-\sum_{k=1}^Kp_k
+\right).
+\end{equation*}
+
+We use the conditions
+\begin{equation*}
+\frac{\partial F}{\partial p_k}=0,
+\qquad
+\frac{\partial F}{\partial\lambda}=0.
+\end{equation*}
+
+Define
+\begin{equation*}
+n_k
+=
+\sum_{i=1}^n\tilde{Z}_{ik},
+\end{equation*}
+where $n_k$ is the number of observations belonging to group $k$.
+
+Keeping only the terms that depend on the mixing proportions,
+the Lagrangian becomes
+\begin{equation*}
+F
+=
+\sum_{k=1}^K n_k\ln p_k
++
+\lambda
+\left(
+1-\sum_{k=1}^Kp_k
+\right)
++
+\text{constant}.
+\end{equation*}
+
+\paragraph{Step 1: Differentiate with respect to $p_k$.}
+
+For a fixed group $k$,
+\begin{equation*}
+\frac{\partial F}{\partial p_k}
+=
+\frac{n_k}{p_k}-\lambda.
+\end{equation*}
+
+At the optimum,
+\begin{equation*}
+\frac{n_k}{p_k}-\lambda=0.
+\end{equation*}
+
+Therefore,
+\begin{equation*}
+p_k=\frac{n_k}{\lambda}.
+\end{equation*}
+
+\paragraph{Step 2: Differentiate with respect to $\lambda$.}
+
+The derivative with respect to the Lagrange multiplier gives back
+the constraint:
+\begin{equation*}
+\frac{\partial F}{\partial\lambda}
+=
+1-\sum_{k=1}^Kp_k
+=
+0.
+\end{equation*}
+
+Therefore,
+\begin{equation*}
+\sum_{k=1}^Kp_k=1.
+\end{equation*}
+
+Substituting
+\begin{equation*}
+p_k=\frac{n_k}{\lambda}
+\end{equation*}
+into the constraint gives
+\begin{equation*}
+\sum_{k=1}^K\frac{n_k}{\lambda}=1.
+\end{equation*}
+
+Since every observation belongs to exactly one group,
+\begin{equation*}
+\sum_{k=1}^Kn_k=n.
+\end{equation*}
+
+Therefore,
+\begin{equation*}
+\frac{n}{\lambda}=1
+\qquad\Longrightarrow\qquad
+\lambda=n.
+\end{equation*}
+
+Hence,
+\begin{equation*}
+\boxed{
+\hat{p}_k=\frac{n_k}{n}
+}.
+\end{equation*}
+
+Since
+\begin{equation*}
+n_k=\sum_{i=1}^n\tilde{Z}_{ik},
+\end{equation*}
+we can equivalently write
+\begin{equation*}
+\boxed{
+\hat{p}_k
+=
+\frac{1}{n}
+\sum_{i=1}^n\tilde{Z}_{ik}
+}.
+\end{equation*}
+
+Thus, exactly as in the univariate case, the estimated mixing
+proportion of group $k$ is the \hl{proportion of observations
+belonging to group $k$}.
+
+
+%------------------------------------------------------------
+\subsection{Estimation of the Mean Vector}
+%------------------------------------------------------------
+
+We now estimate the mean vector
+\begin{equation*}
+\boldsymbol{\mu}_k\in\mathbb{R}^p
+\end{equation*}
+of group $k$.
+
+Unlike the mixing proportions, the mean vectors are not subject to
+a constraint. Therefore, we directly differentiate the
+log-likelihood with respect to $\boldsymbol{\mu}_k$.
+
+Keeping only the terms that depend on $\boldsymbol{\mu}_k$ gives
+\begin{equation*}
+\ln L
+=
+-\frac{1}{2}
+\sum_{i=1}^n
+\tilde{Z}_{ik}
+(\boldsymbol{x}_i-\boldsymbol{\mu}_k)^\top
+\boldsymbol{\Sigma}_k^{-1}
+(\boldsymbol{x}_i-\boldsymbol{\mu}_k)
++
+\text{constant}.
+\end{equation*}
+
+Since $\boldsymbol{\Sigma}_k$ is symmetric positive definite,
+its inverse is also symmetric:
+\begin{equation*}
+(\boldsymbol{\Sigma}_k^{-1})^\top
+=
+\boldsymbol{\Sigma}_k^{-1}.
+\end{equation*}
+
+We use the standard matrix derivative
+\begin{equation*}
+\frac{\partial}{\partial\boldsymbol{\mu}}
+\left[
+(\boldsymbol{x}-\boldsymbol{\mu})^\top
+A
+(\boldsymbol{x}-\boldsymbol{\mu})
+\right]
+=
+-2A(\boldsymbol{x}-\boldsymbol{\mu}),
+\end{equation*}
+when $A$ is symmetric.
+
+Therefore,
+\begin{align*}
+\frac{\partial\ln L}
+{\partial\boldsymbol{\mu}_k}
+&=
+-\frac{1}{2}
+\sum_{i=1}^n
+\tilde{Z}_{ik}
+\left[
+-2\boldsymbol{\Sigma}_k^{-1}
+(\boldsymbol{x}_i-\boldsymbol{\mu}_k)
+\right]\\
+&=
+\boldsymbol{\Sigma}_k^{-1}
+\sum_{i=1}^n
+\tilde{Z}_{ik}
+(\boldsymbol{x}_i-\boldsymbol{\mu}_k).
+\end{align*}
+
+At the maximum likelihood estimator,
+\begin{equation*}
+\frac{\partial\ln L}
+{\partial\boldsymbol{\mu}_k}
+=
+\boldsymbol{0}.
+\end{equation*}
+
+Thus,
+\begin{equation*}
+\boldsymbol{\Sigma}_k^{-1}
+\sum_{i=1}^n
+\tilde{Z}_{ik}
+(\boldsymbol{x}_i-\boldsymbol{\mu}_k)
+=
+\boldsymbol{0}.
+\end{equation*}
+
+Since $\boldsymbol{\Sigma}_k$ is invertible, we can multiply both
+sides by $\boldsymbol{\Sigma}_k$:
+\begin{equation*}
+\sum_{i=1}^n
+\tilde{Z}_{ik}
+(\boldsymbol{x}_i-\boldsymbol{\mu}_k)
+=
+\boldsymbol{0}.
+\end{equation*}
+
+Expanding the expression gives
+\begin{equation*}
+\sum_{i=1}^n
+\tilde{Z}_{ik}\boldsymbol{x}_i
+-
+\boldsymbol{\mu}_k
+\sum_{i=1}^n\tilde{Z}_{ik}
+=
+\boldsymbol{0}.
+\end{equation*}
+
+Using
+\begin{equation*}
+n_k=\sum_{i=1}^n\tilde{Z}_{ik},
+\end{equation*}
+we obtain
+\begin{equation*}
+\sum_{i=1}^n
+\tilde{Z}_{ik}\boldsymbol{x}_i
+-
+n_k\boldsymbol{\mu}_k
+=
+\boldsymbol{0}.
+\end{equation*}
+
+Therefore,
+\begin{equation*}
+n_k\boldsymbol{\mu}_k
+=
+\sum_{i=1}^n
+\tilde{Z}_{ik}\boldsymbol{x}_i
+\end{equation*}
+and hence
+\begin{equation*}
+\boxed{
+\hat{\boldsymbol{\mu}}_k
+=
+\frac{1}{n_k}
+\sum_{i=1}^n
+\tilde{Z}_{ik}\boldsymbol{x}_i
+}.
+\end{equation*}
+
+Thus, the maximum likelihood estimator of the mean vector is the
+\hl{sample mean vector of the observations belonging to group $k$}.
+
+
+%------------------------------------------------------------
+\subsection{Estimation of the Covariance Matrix}
+%------------------------------------------------------------
+
+Finally, we estimate the covariance matrix
+\begin{equation*}
+\boldsymbol{\Sigma}_k.
+\end{equation*}
+
+For a fixed group $k$, the terms of the log-likelihood that depend
+on $\boldsymbol{\Sigma}_k$ are
+\begin{equation*}
+\ln L
+=
+\sum_{i=1}^n
+\tilde{Z}_{ik}
+\left[
+-\frac{1}{2}\ln|\boldsymbol{\Sigma}_k|
+-\frac{1}{2}
+(\boldsymbol{x}_i-\boldsymbol{\mu}_k)^\top
+\boldsymbol{\Sigma}_k^{-1}
+(\boldsymbol{x}_i-\boldsymbol{\mu}_k)
+\right]
++
+\text{constant}.
+\end{equation*}
+
+For convenience, define
+\begin{equation*}
+\boldsymbol{d}_{ik}
+=
+\boldsymbol{x}_i-\boldsymbol{\mu}_k.
+\end{equation*}
+
+Then the relevant part of the log-likelihood can be written as
+\begin{equation*}
+\ln L
+=
+-\frac{1}{2}
+\sum_{i=1}^n
+\tilde{Z}_{ik}
+\left[
+\ln|\boldsymbol{\Sigma}_k|
++
+\boldsymbol{d}_{ik}^\top
+\boldsymbol{\Sigma}_k^{-1}
+\boldsymbol{d}_{ik}
+\right]
++
+\text{constant}.
+\end{equation*}
+
+We use the following standard matrix derivatives:
+\begin{equation*}
+\frac{\partial}{\partial\boldsymbol{\Sigma}}
+\ln|\boldsymbol{\Sigma}|
+=
+\boldsymbol{\Sigma}^{-1},
+\end{equation*}
+and
+\begin{equation*}
+\frac{\partial}{\partial\boldsymbol{\Sigma}}
+\left(
+\boldsymbol{d}^\top
+\boldsymbol{\Sigma}^{-1}
+\boldsymbol{d}
+\right)
+=
+-\boldsymbol{\Sigma}^{-1}
+\boldsymbol{d}\boldsymbol{d}^\top
+\boldsymbol{\Sigma}^{-1},
+\end{equation*}
+where $\boldsymbol{\Sigma}$ is symmetric positive definite.
+
+Therefore,
+\begin{align*}
+\frac{\partial\ln L}
+{\partial\boldsymbol{\Sigma}_k}
+&=
+-\frac{1}{2}
+\sum_{i=1}^n
+\tilde{Z}_{ik}
+\left[
+\boldsymbol{\Sigma}_k^{-1}
+-
+\boldsymbol{\Sigma}_k^{-1}
+\boldsymbol{d}_{ik}\boldsymbol{d}_{ik}^\top
+\boldsymbol{\Sigma}_k^{-1}
+\right]\\
+&=
+-\frac{1}{2}
+\sum_{i=1}^n
+\tilde{Z}_{ik}
+\left[
+\boldsymbol{\Sigma}_k^{-1}
+-
+\boldsymbol{\Sigma}_k^{-1}
+(\boldsymbol{x}_i-\boldsymbol{\mu}_k)
+(\boldsymbol{x}_i-\boldsymbol{\mu}_k)^\top
+\boldsymbol{\Sigma}_k^{-1}
+\right].
+\end{align*}
+
+At the maximum likelihood estimator,
+\begin{equation*}
+\frac{\partial\ln L}
+{\partial\boldsymbol{\Sigma}_k}
+=
+\boldsymbol{0}.
+\end{equation*}
+
+Therefore,
+\begin{equation*}
+\sum_{i=1}^n
+\tilde{Z}_{ik}
+\left[
+\boldsymbol{\Sigma}_k^{-1}
+-
+\boldsymbol{\Sigma}_k^{-1}
+(\boldsymbol{x}_i-\boldsymbol{\mu}_k)
+(\boldsymbol{x}_i-\boldsymbol{\mu}_k)^\top
+\boldsymbol{\Sigma}_k^{-1}
+\right]
+=
+\boldsymbol{0}.
+\end{equation*}
+
+Expanding the sum gives
+\begin{equation*}
+\left(
+\sum_{i=1}^n\tilde{Z}_{ik}
+\right)
+\boldsymbol{\Sigma}_k^{-1}
+-
+\boldsymbol{\Sigma}_k^{-1}
+\left[
+\sum_{i=1}^n
+\tilde{Z}_{ik}
+(\boldsymbol{x}_i-\boldsymbol{\mu}_k)
+(\boldsymbol{x}_i-\boldsymbol{\mu}_k)^\top
+\right]
+\boldsymbol{\Sigma}_k^{-1}
+=
+\boldsymbol{0}.
+\end{equation*}
+
+Using
+\begin{equation*}
+n_k=\sum_{i=1}^n\tilde{Z}_{ik},
+\end{equation*}
+we obtain
+\begin{equation*}
+n_k\boldsymbol{\Sigma}_k^{-1}
+-
+\boldsymbol{\Sigma}_k^{-1}
+\left[
+\sum_{i=1}^n
+\tilde{Z}_{ik}
+(\boldsymbol{x}_i-\boldsymbol{\mu}_k)
+(\boldsymbol{x}_i-\boldsymbol{\mu}_k)^\top
+\right]
+\boldsymbol{\Sigma}_k^{-1}
+=
+\boldsymbol{0}.
+\end{equation*}
+
+Multiplying on the left and right by
+$\boldsymbol{\Sigma}_k$ gives
+\begin{equation*}
+n_k\boldsymbol{\Sigma}_k
+-
+\sum_{i=1}^n
+\tilde{Z}_{ik}
+(\boldsymbol{x}_i-\boldsymbol{\mu}_k)
+(\boldsymbol{x}_i-\boldsymbol{\mu}_k)^\top
+=
+\boldsymbol{0}.
+\end{equation*}
+
+Therefore,
+\begin{equation*}
+\sum_{i=1}^n
+\tilde{Z}_{ik}
+(\boldsymbol{x}_i-\boldsymbol{\mu}_k)
+(\boldsymbol{x}_i-\boldsymbol{\mu}_k)^\top
+=
+n_k\boldsymbol{\Sigma}_k.
+\end{equation*}
+
+Hence,
+\begin{equation*}
+\boldsymbol{\Sigma}_k
+=
+\frac{1}{n_k}
+\sum_{i=1}^n
+\tilde{Z}_{ik}
+(\boldsymbol{x}_i-\boldsymbol{\mu}_k)
+(\boldsymbol{x}_i-\boldsymbol{\mu}_k)^\top.
+\end{equation*}
+
+Since the maximum likelihood estimator of the mean vector is
+$\hat{\boldsymbol{\mu}}_k$, the covariance estimator is therefore
+\begin{equation*}
+\boxed{
+\hat{\boldsymbol{\Sigma}}_k
+=
+\frac{1}{n_k}
+\sum_{i=1}^n
+\tilde{Z}_{ik}
+(\boldsymbol{x}_i-\hat{\boldsymbol{\mu}}_k)
+(\boldsymbol{x}_i-\hat{\boldsymbol{\mu}}_k)^\top
+}.
+\end{equation*}
+
+Thus, the maximum likelihood estimator of the covariance matrix is
+the \hl{empirical covariance matrix of the observations belonging
+to group $k$}.
+
+Notice that, as in the univariate case, the denominator is $n_k$,
+not $n_k-1$. This is because we are deriving the maximum likelihood
+estimator rather than the unbiased estimator of the covariance
+matrix.
+
+
+%------------------------------------------------------------
+\subsubsection*{Summary of the Three Estimators}
+%------------------------------------------------------------
+
+For a multivariate Gaussian mixture with known group memberships,
+the maximum likelihood estimators are
+\begin{equation*}
+\boxed{
+\hat{p}_k
+=
+\frac{n_k}{n}
+}
+\end{equation*}
+
+\begin{equation*}
+\boxed{
+\hat{\boldsymbol{\mu}}_k
+=
+\frac{1}{n_k}
+\sum_{i=1}^n
+\tilde{Z}_{ik}\boldsymbol{x}_i
+}
+\end{equation*}
+
+and
+\begin{equation*}
+\boxed{
+\hat{\boldsymbol{\Sigma}}_k
+=
+\frac{1}{n_k}
+\sum_{i=1}^n
+\tilde{Z}_{ik}
+(\boldsymbol{x}_i-\hat{\boldsymbol{\mu}}_k)
+(\boldsymbol{x}_i-\hat{\boldsymbol{\mu}}_k)^\top
+}.
+\end{equation*}
+
+In other words,
+\begin{equation*}
+\boxed{
+\begin{aligned}
+\hat{p}_k
+&=\text{proportion of observations in group }k,\\[2mm]
+\hat{\boldsymbol{\mu}}_k
+&=\text{mean vector of the observations in group }k,\\[2mm]
+\hat{\boldsymbol{\Sigma}}_k
+&=\text{covariance matrix of the observations in group }k.
+\end{aligned}
+}
+\end{equation*}
+
+These are exactly the multivariate empirical estimators applied
+separately within each group.
+
+The transition from the univariate to the multivariate case is
+therefore straightforward:
+\begin{equation*}
+\boxed{
+\begin{aligned}
+p_k
+&\longrightarrow p_k,\\
+\mu_k
+&\longrightarrow \boldsymbol{\mu}_k,\\
+\sigma_k^2
+&\longrightarrow \boldsymbol{\Sigma}_k.
+\end{aligned}
+}
+\end{equation*}
+
+The scalar squared deviation
+\begin{equation*}
+(x_i-\mu_k)^2
+\end{equation*}
+is replaced by the outer product
+\begin{equation*}
+(\boldsymbol{x}_i-\boldsymbol{\mu}_k)
+(\boldsymbol{x}_i-\boldsymbol{\mu}_k)^\top,
+\end{equation*}
+which produces the $p\times p$ covariance matrix.

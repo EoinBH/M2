@@ -1,0 +1,58 @@
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Notations}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}The Mixture Model}{3}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Mixing Proportions and Latent Group Membership}{4}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Marginal Distribution of X: Mixture Density}{4}{subsection.1.4}%
+\contentsline {subsection}{\numberline {1.5}Posterior Probability of Group Membership}{5}{subsection.1.5}%
+\contentsline {section}{\numberline {2}Classification}{6}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Classification Rule}{6}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Classification Errors}{6}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Cost and Risk}{6}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Bayes Optimal Classification Rule}{7}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Bayes Rule with Equal Costs}{7}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Bayes Rule for Two Groups}{8}{subsection.2.6}%
+\contentsline {section}{\numberline {3}Univariate vs. Multivariate Gaussian Distributions}{9}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Probability Density Functions (PDFs)}{9}{subsection.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.1}Univariate Gaussian Distribution}{9}{subsubsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.2}Multivariate Gaussian Distribution}{9}{subsubsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.2}Mathematical Component Mapping}{9}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Key Geometric Interpretation}{10}{subsection.3.3}%
+\contentsline {section}{\numberline {4}GMM \& MLE}{11}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Gaussian Mixture Model (GMM)}{11}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Maximum Likelihood Estimation (MLE)}{11}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Log-Likelihood}{11}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Empirical Estimates}{12}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Key Connections}{12}{subsection.4.5}%
+\contentsline {section}{\numberline {5}Clustering and the EM Algorithm}{14}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Likelihood and Log-Likelihood in the Clustering Context}{14}{subsection.5.1}%
+\contentsline {paragraph}{Why is the clustering likelihood harder?}{14}{section*.2}%
+\contentsline {paragraph}{Important distinction.}{15}{section*.3}%
+\contentsline {subsection}{\numberline {5.2}MLE in the Clustering Context}{15}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}From the Observed Likelihood to the Completed Likelihood}{16}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}The EM Algorithm}{17}{subsection.5.4}%
+\contentsline {subsubsection}{\numberline {5.4.1}E-Step: Expectation}{17}{subsubsection.5.4.1}%
+\contentsline {subsubsection}{\numberline {5.4.2}M-Step: Maximisation}{18}{subsubsection.5.4.2}%
+\contentsline {subsubsection}{\numberline {5.4.3}Complete EM Iteration}{18}{subsubsection.5.4.3}%
+\contentsline {subsection}{\numberline {5.5}Proof of EM Monotonicity and Convergence}{19}{subsection.5.5}%
+\contentsline {paragraph}{Important caveat for Gaussian mixtures.}{21}{section*.9}%
+\contentsline {subsection}{\numberline {5.6}Classification EM (CEM)}{22}{subsection.5.6}%
+\contentsline {paragraph}{Properties of CEM.}{22}{section*.10}%
+\contentsline {subsection}{\numberline {5.7}Stochastic EM (SEM)}{23}{subsection.5.7}%
+\contentsline {paragraph}{Properties of SEM.}{23}{section*.11}%
+\contentsline {subsection}{\numberline {5.8}$k$-Means as a Particular Case of a Gaussian Mixture Model}{24}{subsection.5.8}%
+\contentsline {subsubsection}{\numberline {5.8.1}The $k$-Means Objective}{25}{subsubsection.5.8.1}%
+\contentsline {paragraph}{Assignment step.}{25}{section*.12}%
+\contentsline {paragraph}{Update step.}{25}{section*.13}%
+\contentsline {subsubsection}{\numberline {5.8.2}Connection Between GMM, CEM and $k$-Means}{25}{subsubsection.5.8.2}%
+\contentsline {section}{\numberline {6}Proofs of Estimators (1D GMM - Classification)}{27}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Estimation of the Mixing Proportions $p_k$}{28}{subsection.6.1}%
+\contentsline {paragraph}{Step 1: Differentiate with respect to $p_k$.}{29}{section*.15}%
+\contentsline {paragraph}{Step 2: Differentiate with respect to $\lambda $.}{29}{section*.16}%
+\contentsline {subsection}{\numberline {6.2}Estimation of the Mean $\mu _k$}{30}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Estimation of the Variance $\sigma _k^2$}{31}{subsection.6.3}%
+\contentsline {section}{\numberline {7}Proofs of Estimators (Multivariate GMM - Classification)}{34}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Estimation of the Mixing Proportions $p_k$}{35}{subsection.7.1}%
+\contentsline {paragraph}{Step 1: Differentiate with respect to $p_k$.}{35}{section*.18}%
+\contentsline {paragraph}{Step 2: Differentiate with respect to $\lambda $.}{36}{section*.19}%
+\contentsline {subsection}{\numberline {7.2}Estimation of the Mean Vector}{37}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Estimation of the Covariance Matrix}{38}{subsection.7.3}%

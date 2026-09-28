@@ -1,0 +1,177 @@
+\section{Introduction}
+
+\subsection{Notations}
+\begin{itemize}
+	\item Observations are described by $p$ \hl{features} $\bm{X}=(X_{1},...,X_{p})\in\mathit{E}$ $ (E=\mathbb{R}^{p},...)$
+	\item $\bm{X}_{i}=(X_{i1},...,X_{ip})$ is the features for observation $i$ $(1 \leq i \leq n)$
+	\item $\mathit{Z}_i\in\{1,...,\mathit{K}\}$ is the \hl{group} of observation $i$
+\end{itemize}
+
+\subsection{The Mixture Model}
+\textbf{Idea:} each group is described by its \textit{own} probability distribution.
+\[
+\bm{X} \mid \mathit{Z} = k \sim f(\mathbf{x},\theta_{k})=f_k(\mathbf{x})
+\]
+
+\textbf{How to read it:}
+\begin{itemize}
+\item $\bm{X}$ = feature vector describing one observation.
+\item $Z=k$ = the observation belongs to group/cluster $k$.
+\item $\bm{X}\mid Z=k$ = the features \emph{given that} the observation belongs to group $k$.
+\item $\sim$ = ``is distributed according to''.
+\item $f_k(\mathbf{x})$ = the probability distribution (density) for group $k$.
+\item $\theta_k$ = parameters describing the distribution for group $k$.
+\end{itemize}
+
+\[
+\fbox{
+\parbox{0.8\textwidth}{
+If an observation belongs to group \(k\), its features follow
+the distribution \(f_k\) with parameters \(\theta_k\).
+}}
+\]
+
+\textbf{Key idea:} Each group has its \emph{own} probability distribution:
+\[
+f_1(\mathbf{x}),;f_2(\mathbf{x}),;\ldots,;f_K(\mathbf{x}).
+\]
+
+\textbf{Important for clustering:} We observe $\bm{X}_i$, but $Z_i$ is typically
+\emph{unknown}. We therefore use the observed features to infer which group
+generated each observation.
+
+\subsection{Mixing Proportions and Latent Group Membership}
+
+The probability that an observation belongs to group $k$ is called the
+\hl{mixing proportion}:
+
+$$
+p_k=P(Z=k),
+\qquad k=1,\ldots,K.
+$$
+
+The mixing proportions satisfy
+
+$$
+p_k\geq 0
+\qquad\text{and}\qquad
+\sum_{k=1}^K p_k=1.
+$$
+
+Thus, $p_k$ represents the proportion (or prior probability) of observations
+belonging to group $k$.
+
+\medskip
+
+\textbf{One-hot representation of the group membership:}
+
+The group variable $Z$ can be represented by a vector
+$\tilde{Z}=(\tilde{Z}_1,\ldots,\tilde{Z}_K)$ such that
+
+$$
+Z=k
+\quad\Longleftrightarrow\quad
+\tilde{Z}=(0,\ldots,0,1,0,\ldots,0),
+$$
+
+where the $1$ is in the $k$-th position. Therefore,
+
+$$
+\tilde{Z}_k=
+\begin{cases}
+1 & \text{if } Z=k,\\
+0 & \text{otherwise.}
+\end{cases}
+$$
+
+The membership vector follows a multinomial distribution with one trial:
+
+$$
+\tilde{Z}\sim\mathcal{M}(1,p_1,\ldots,p_K),
+$$
+
+and
+
+$$
+p_k=P(Z=k)=P(\tilde{Z}_k=1).
+$$
+
+\textbf{Key idea:} First, a group is selected according to the mixing
+proportions $p_1,\ldots,p_K$. Then, the observation is generated from the
+corresponding group distribution.
+
+\subsection{Marginal Distribution of X: Mixture Density}
+$\bm{X}$
+Conditionally on belonging to group $k$,
+
+$$
+\bm{X}\mid Z=k\sim f_k(\mathbf{x}).
+$$
+
+Since $Z$ is generally unobserved, the marginal distribution of $\bm{X}$ is
+obtained by combining all group distributions:
+
+$$
+\boxed{
+f(\mathbf{x})
+=
+\sum_{k=1}^K p_k f_k(\mathbf{x})
+}
+$$
+
+This is called the \hl{mixture density}.
+
+$$
+\boxed{
+\text{Mixture density}
+=
+\sum
+\text{mixing proportion}
+\times
+\text{group density}
+}
+$$
+
+\subsection{Posterior Probability of Group Membership}
+
+For an observed feature vector $\bm{X}=\mathbf{x}$, we want to compute the
+probability that it belongs to group $k$:
+
+$$
+P(Z=k\mid \bm{X}=\mathbf{x}).
+$$
+
+Using Bayes' theorem:
+
+$$
+\boxed{
+P(Z=k\mid \bm{X}=\mathbf{x})
+=
+\frac{p_kf_k(\mathbf{x})}
+{\displaystyle\sum_{\ell=1}^K p_\ell f_\ell(\mathbf{x})}
+=
+\frac{p_kf_k(\mathbf{x})}{f(\mathbf{x})}
+}
+$$
+
+\textbf{Interpretation:}
+\begin{itemize}
+\item $p_k$: how common group $k$ is (\textit{prior probability});
+\item $f_k(\mathbf{x})$: how well group $k$ explains the observation
+$\mathbf{x}$;
+\item $P(Z=k\mid\bm{X}=\mathbf{x})$: the probability that the observation
+belongs to group $k$ \emph{after observing} $\mathbf{x}$ (\textit{posterior
+probability}).
+\end{itemize}
+
+\textbf{Memory aid:}
+
+$$
+\boxed{
+\text{Prior probability}
+\times
+\text{How well the group explains }\mathbf{x}
+\;\longrightarrow\;
+\text{Posterior probability}
+}
+$$

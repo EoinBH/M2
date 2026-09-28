@@ -1,0 +1,53 @@
+\section{Univariate vs. Multivariate Gaussian Distributions}
+
+This section compares the mathematical definitions and structural components of the 1D (univariate) and multi-dimensional (multivariate) Gaussian distributions.
+
+\subsection{Probability Density Functions (PDFs)}
+
+\subsubsection{Univariate Gaussian Distribution}
+For a single continuous random variable $x$, the probability density function is defined as:
+\begin{equation}
+f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left( -\frac{(x - \mu)^2}{2\sigma^2} \right)
+\end{equation}
+Where:
+\begin{itemize}
+    \item $\mu$ is the scalar mean (location of the peak).
+    \item $\sigma^2$ is the scalar variance (spread of the distribution).
+\end{itemize}
+
+\subsubsection{Multivariate Gaussian Distribution}
+For a $D$-dimensional vector of random variables $\mathbf{x} = [x_1, x_2, \dots, x_D]^T$, the probability density function generalizes to:
+\begin{equation}
+f(\mathbf{x}) = \frac{1}{\sqrt{(2\pi)^D |\boldsymbol{\Sigma}|}} \exp\left( -\frac{1}{2} (\mathbf{x} - \boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{x} - \boldsymbol{\mu}) \right)
+\end{equation}
+Where:
+\begin{itemize}
+    \item $\boldsymbol{\mu} \in \mathbb{R}^D$ is the mean vector.
+    \item $\boldsymbol{\Sigma} \in \mathbb{R}^{D \times D}$ is the symmetric, positive-definite covariance matrix.
+    \item $|\boldsymbol{\Sigma}|$ denotes the determinant of the covariance matrix.
+    \item $\boldsymbol{\Sigma}^{-1}$ is the inverse of the covariance matrix.
+\end{itemize}
+
+\subsection{Mathematical Component Mapping}
+
+The table below illustrates how the components of the univariate formula scale up to handle multiple dimensions.
+
+\begin{table}[h!]
+\centering
+\small
+\caption{Structural Translation from 1D to D-Dimensions}
+\label{tab:gaussian_comparison}
+\begin{tabularx}{\textwidth}{p{2.6cm} p{2.4cm} p{3.2cm} X}
+\hline
+\textbf{Component} & \textbf{Univariate (1D)} & \textbf{Multivariate ($D$-D)} & \textbf{Structural Role} \\ \hline
+Input Variable & Scalar: $x$ & Vector: $\mathbf{x} \in \mathbb{R}^D$ & Tracks multiple dimensions simultaneously. \\ \hline
+Center / Mean & Scalar: $\mu$ & Vector: $\boldsymbol{\mu} \in \mathbb{R}^D$ & Contains individual coordinates for the center. \\ \hline
+Spread / Scale & Variance: $\sigma^2$ & Matrix: $\boldsymbol{\Sigma} \in \mathbb{R}^{D \times D}$ & Determinant $|\boldsymbol{\Sigma}|$ scales the density volume. \\ \hline
+Inverse Spread & Division: $\frac{1}{\sigma^2}$ & Matrix Inverse: $\boldsymbol{\Sigma}^{-1}$ & Matrix inversion replaces regular division. \\ \hline
+Distance Metric & $(x - \mu)^2$ & $(\mathbf{x} - \boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{x} - \boldsymbol{\mu})$ & Computes squared Mahalanobis distance. \\ \hline
+Normalization & $\sqrt{2\pi\sigma^2}$ & $\sqrt{(2\pi)^D |\boldsymbol{\Sigma}|}$ & Scales total density volume to integrate to 1. \\ \hline
+\end{tabularx}
+\end{table}
+
+\subsection{Key Geometric Interpretation}
+The exponent term in the multivariate PDF represents the \textit{Mahalanobis distance}. Unlike the standard Euclidean distance, it accounts for variances along each axis and covariances between dimensions. This turns the perfectly circular or spherical contours of independent variables into multi-dimensional hyperellipsoids when variables correlate.

@@ -1,0 +1,61 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{soul}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{titling}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{minted}
+\usepackage{tabularx}
+\hypersetup{
+    colorlinks=false,
+    linkcolor=cyan,
+    citecolor=magenta,      
+    urlcolor=cyan,
+    linktoc=all,
+}
+\lstset{%
+  basicstyle=\scriptsize\sffamily,%
+  commentstyle=\footnotesize\ttfamily,%
+  frameround=trBL,
+  frame=single,
+  breaklines=true,
+  showstringspaces=false,
+  numbers=left,
+  numberstyle=\tiny,
+  numbersep=10pt,
+  keywordstyle=\bf
+}
+\newcommand{\subtitle}[1]{%
+  \posttitle{%
+    \par\end{center}
+    \begin{center}\large#1\end{center}
+    \vskip0.5em}%
+}
+%\title{\vspace{-3.0cm}Final Year Project – Interim Report}
+%\subtitle{CSU44099}
+%\author{Eoin Brereton Hurley}
+%\date{20/01/2023}
+
+\begin{document}
+
+%\maketitle
+\input{titlepage.tex}
+%\begin{abstract}
+%Abstract
+%\end{abstract}
+\tableofcontents
+
+\include{Introduction}
+\include{Classification}
+\include{Univariate-Multivariate-Gaussian}
+\include{GMM-MLE}
+\include{Clustering-EM}
+\include{Estimators-Proofs-1D}
+\include{Estimators-Proofs-Multivariate}
+
+\end{document}

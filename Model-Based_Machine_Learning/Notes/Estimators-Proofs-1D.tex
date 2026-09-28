@@ -1,0 +1,566 @@
+\section{Proofs of Estimators (1D GMM - Classification)}
+
+For $p=1$, there is only one feature, so we consider a
+\hl{one-dimensional Gaussian mixture model}:
+\begin{equation*}
+X\mid Z=k\sim\mathcal{N}(\mu_k,\sigma_k^2),
+\qquad k=1,\ldots,K.
+\end{equation*}
+
+The one-hot representation of the group variable is
+\begin{equation*}
+\tilde{Z}\sim\mathcal{M}(1,p_1,\ldots,p_K),
+\end{equation*}
+where
+\begin{equation*}
+p_k=P(Z=k),
+\qquad
+\sum_{k=1}^Kp_k=1.
+\end{equation*}
+
+The parameter vector is
+\begin{equation*}
+\theta=
+(p_1,\ldots,p_K,\mu_1,\ldots,\mu_K,
+\sigma_1^2,\ldots,\sigma_K^2).
+\end{equation*}
+
+For group $k$, the Gaussian density is
+\begin{equation*}
+f_k(x)
+=
+\frac{1}{\sqrt{2\pi\sigma_k^2}}
+\exp\left(
+-\frac{1}{2}
+\frac{(x-\mu_k)^2}{\sigma_k^2}
+\right).
+\end{equation*}
+
+We observe
+\begin{equation*}
+\underline{X}=(X_1,\ldots,X_n)
+\end{equation*}
+and denote the corresponding group variables by
+\begin{equation*}
+\underline{Z}=(Z_1,\ldots,Z_n).
+\end{equation*}
+
+Using the one-hot representation $\tilde{Z}_{ik}$, where
+\begin{equation*}
+\tilde{Z}_{ik}
+=
+\begin{cases}
+1 & \text{if } Z_i=k,\\
+0 & \text{otherwise},
+\end{cases}
+\end{equation*}
+the complete-data log-likelihood is
+\begin{equation*}
+\ln L(\underline{X},Z,\theta)
+=
+\sum_{i=1}^{n}\sum_{k=1}^{K}
+\tilde{Z}_{ik}
+\left[
+\ln p_k
+-\frac{1}{2}\ln\sigma_k^2
+-\ln\sqrt{2\pi}
+-\frac{1}{2}
+\frac{(x_i-\mu_k)^2}{\sigma_k^2}
+\right].
+\end{equation*}
+
+We now derive the maximum likelihood estimators of the three types
+of parameters:
+\begin{equation*}
+p_k,\qquad \mu_k,\qquad \sigma_k^2.
+\end{equation*}
+
+\subsection{Estimation of the Mixing Proportions $p_k$}
+
+The mixing proportions satisfy the constraint
+\begin{equation*}
+\sum_{k=1}^Kp_k=1.
+\end{equation*}
+
+Equivalently,
+\begin{equation*}
+\sum_{k=1}^Kp_k-1=0.
+\end{equation*}
+
+Following the notation used by the professor, we can write
+\begin{equation*}
+\sum_{k=1}^Kp_k-1=\psi(x).
+\end{equation*}
+
+To find the extremum of a function $\phi(x)$ under the constraint
+\begin{equation*}
+\psi(x)=0,
+\end{equation*}
+we introduce a Lagrange multiplier $\lambda$ and optimize
+\begin{equation*}
+F(x,\lambda)
+=
+\phi(x)+\lambda\psi(x).
+\end{equation*}
+
+In our case, we therefore define the Lagrangian
+\begin{equation*}
+F(\theta,\lambda)
+=
+\ln L(\underline{X},Z,\theta)
++
+\lambda
+\left(
+1-\sum_{k=1}^Kp_k
+\right).
+\end{equation*}
+
+We use the conditions
+\begin{equation*}
+\frac{\partial F}{\partial p_k}=0,
+\qquad
+\frac{\partial F}{\partial\lambda}=0.
+\end{equation*}
+
+When differentiating with respect to $p_k$, all terms that do not
+depend on $p_k$ can be ignored. Therefore,
+\begin{equation*}
+F
+=
+\sum_{k=1}^K
+\left(
+\sum_{i=1}^n\tilde{Z}_{ik}
+\right)\ln p_k
++
+\lambda
+\left(
+1-\sum_{k=1}^Kp_k
+\right)
++
+\text{terms independent of the }p_k.
+\end{equation*}
+
+Define
+\begin{equation*}
+n_k
+=
+\sum_{i=1}^n\tilde{Z}_{ik},
+\end{equation*}
+where $n_k$ is the number of observations belonging to group $k$.
+
+Thus, the part of the Lagrangian that depends on the mixing
+proportions becomes
+\begin{equation*}
+F
+=
+\sum_{k=1}^K n_k\ln p_k
++
+\lambda
+\left(
+1-\sum_{k=1}^Kp_k
+\right)
++
+\text{constant}.
+\end{equation*}
+
+\paragraph{Step 1: Differentiate with respect to $p_k$.}
+
+For a fixed group $k$,
+\begin{equation*}
+\frac{\partial F}{\partial p_k}
+=
+\frac{n_k}{p_k}-\lambda.
+\end{equation*}
+
+At the optimum,
+\begin{equation*}
+\frac{n_k}{p_k}-\lambda=0.
+\end{equation*}
+
+Therefore,
+\begin{equation*}
+p_k=\frac{n_k}{\lambda}.
+\end{equation*}
+
+\paragraph{Step 2: Differentiate with respect to $\lambda$.}
+
+The derivative with respect to the Lagrange multiplier gives back
+the constraint:
+\begin{equation*}
+\frac{\partial F}{\partial\lambda}
+=
+1-\sum_{k=1}^Kp_k
+=
+0.
+\end{equation*}
+
+Therefore,
+\begin{equation*}
+\sum_{k=1}^Kp_k=1.
+\end{equation*}
+
+Substituting
+\begin{equation*}
+p_k=\frac{n_k}{\lambda}
+\end{equation*}
+into the constraint gives
+\begin{equation*}
+\sum_{k=1}^K\frac{n_k}{\lambda}=1.
+\end{equation*}
+
+Since every observation belongs to exactly one group,
+\begin{equation*}
+\sum_{k=1}^Kn_k=n.
+\end{equation*}
+
+Therefore,
+\begin{equation*}
+\frac{n}{\lambda}=1
+\qquad\Longrightarrow\qquad
+\lambda=n.
+\end{equation*}
+
+Hence,
+\begin{equation*}
+\boxed{
+\hat{p}_k=\frac{n_k}{n}
+}.
+\end{equation*}
+
+Since
+\begin{equation*}
+n_k=\sum_{i=1}^n\tilde{Z}_{ik},
+\end{equation*}
+we can equivalently write
+\begin{equation*}
+\boxed{
+\hat{p}_k
+=
+\frac{1}{n}
+\sum_{i=1}^n\tilde{Z}_{ik}
+}.
+\end{equation*}
+
+Thus, the estimated mixing proportion of group $k$ is simply the
+\hl{proportion of observations belonging to group $k$}.
+
+\subsection{Estimation of the Mean $\mu_k$}
+
+We now estimate the mean $\mu_k$ of group $k$.
+
+Unlike the mixing proportions, the means are not subject to a
+constraint. Therefore, we can directly differentiate the
+log-likelihood with respect to $\mu_k$.
+
+Starting from
+\begin{equation*}
+\ln L(\underline{X},Z,\theta)
+=
+\sum_{i=1}^{n}\sum_{k=1}^{K}
+\tilde{Z}_{ik}
+\left[
+\ln p_k
+-\frac{1}{2}\ln\sigma_k^2
+-\ln\sqrt{2\pi}
+-\frac{1}{2}
+\frac{(x_i-\mu_k)^2}{\sigma_k^2}
+\right],
+\end{equation*}
+we only keep the terms that depend on $\mu_k$:
+\begin{equation*}
+\ln L
+=
+-\frac{1}{2}
+\sum_{i=1}^n
+\tilde{Z}_{ik}
+\frac{(x_i-\mu_k)^2}{\sigma_k^2}
++
+\text{constant}.
+\end{equation*}
+
+We differentiate with respect to $\mu_k$:
+\begin{equation*}
+\frac{\partial\ln L}{\partial\mu_k}
+=
+-\frac{1}{2}
+\sum_{i=1}^n
+\tilde{Z}_{ik}
+\frac{\partial}{\partial\mu_k}
+\left(
+\frac{(x_i-\mu_k)^2}{\sigma_k^2}
+\right).
+\end{equation*}
+
+Since $\sigma_k^2$ does not depend on $\mu_k$,
+\begin{equation*}
+\frac{\partial}{\partial\mu_k}
+(x_i-\mu_k)^2
+=
+-2(x_i-\mu_k).
+\end{equation*}
+
+Therefore,
+\begin{equation*}
+\frac{\partial\ln L}{\partial\mu_k}
+=
+\frac{1}{\sigma_k^2}
+\sum_{i=1}^n
+\tilde{Z}_{ik}(x_i-\mu_k).
+\end{equation*}
+
+At the maximum likelihood estimator,
+\begin{equation*}
+\frac{\partial\ln L}{\partial\mu_k}=0.
+\end{equation*}
+
+Thus,
+\begin{equation*}
+\frac{1}{\sigma_k^2}
+\sum_{i=1}^n
+\tilde{Z}_{ik}(x_i-\mu_k)
+=
+0.
+\end{equation*}
+
+Since $\sigma_k^2>0$, we can multiply by $\sigma_k^2$:
+\begin{equation*}
+\sum_{i=1}^n
+\tilde{Z}_{ik}(x_i-\mu_k)
+=
+0.
+\end{equation*}
+
+Expanding the expression,
+\begin{equation*}
+\sum_{i=1}^n
+\tilde{Z}_{ik}x_i
+-
+\mu_k
+\sum_{i=1}^n
+\tilde{Z}_{ik}
+=
+0.
+\end{equation*}
+
+Using
+\begin{equation*}
+n_k=\sum_{i=1}^n\tilde{Z}_{ik},
+\end{equation*}
+we obtain
+\begin{equation*}
+\sum_{i=1}^n
+\tilde{Z}_{ik}x_i
+-
+\mu_kn_k
+=
+0.
+\end{equation*}
+
+Therefore,
+\begin{equation*}
+\mu_kn_k
+=
+\sum_{i=1}^n
+\tilde{Z}_{ik}x_i
+\end{equation*}
+and hence
+\begin{equation*}
+\boxed{
+\hat{\mu}_k
+=
+\frac{1}{n_k}
+\sum_{i=1}^n
+\tilde{Z}_{ik}x_i
+}.
+\end{equation*}
+
+Thus, the maximum likelihood estimator of $\mu_k$ is simply the
+\hl{sample mean of the observations belonging to group $k$}.
+
+\subsection{Estimation of the Variance $\sigma_k^2$}
+
+Finally, we estimate the variance $\sigma_k^2$ of group $k$.
+
+Again, there is no constraint on $\sigma_k^2$, so we directly
+differentiate the log-likelihood with respect to $\sigma_k^2$.
+
+The terms depending on $\sigma_k^2$ are
+\begin{equation*}
+\ln L
+=
+\sum_{i=1}^n
+\tilde{Z}_{ik}
+\left[
+-\frac{1}{2}\ln\sigma_k^2
+-\frac{1}{2}
+\frac{(x_i-\mu_k)^2}{\sigma_k^2}
+\right]
++
+\text{constant}.
+\end{equation*}
+
+Therefore,
+\begin{equation*}
+\frac{\partial\ln L}{\partial\sigma_k^2}
+=
+\sum_{i=1}^n
+\tilde{Z}_{ik}
+\frac{\partial}{\partial\sigma_k^2}
+\left[
+-\frac{1}{2}\ln\sigma_k^2
+-\frac{1}{2}
+\frac{(x_i-\mu_k)^2}{\sigma_k^2}
+\right].
+\end{equation*}
+
+For the first term,
+\begin{equation*}
+\frac{\partial}{\partial\sigma_k^2}
+\left(
+-\frac{1}{2}\ln\sigma_k^2
+\right)
+=
+-\frac{1}{2\sigma_k^2}.
+\end{equation*}
+
+For the second term,
+\begin{equation*}
+\frac{\partial}{\partial\sigma_k^2}
+\left(
+-\frac{1}{2}
+\frac{(x_i-\mu_k)^2}{\sigma_k^2}
+\right)
+=
+\frac{1}{2}
+\frac{(x_i-\mu_k)^2}{(\sigma_k^2)^2}.
+\end{equation*}
+
+Therefore,
+\begin{equation*}
+\frac{\partial\ln L}{\partial\sigma_k^2}
+=
+\sum_{i=1}^n
+\tilde{Z}_{ik}
+\left[
+-\frac{1}{2\sigma_k^2}
++
+\frac{1}{2}
+\frac{(x_i-\mu_k)^2}{(\sigma_k^2)^2}
+\right].
+\end{equation*}
+
+At the maximum likelihood estimator,
+\begin{equation*}
+\frac{\partial\ln L}{\partial\sigma_k^2}=0.
+\end{equation*}
+
+Thus,
+\begin{equation*}
+\sum_{i=1}^n
+\tilde{Z}_{ik}
+\left[
+-\frac{1}{2\sigma_k^2}
++
+\frac{1}{2}
+\frac{(x_i-\mu_k)^2}{(\sigma_k^2)^2}
+\right]
+=
+0.
+\end{equation*}
+
+Multiplying by $2(\sigma_k^2)^2$ gives
+\begin{equation*}
+\sum_{i=1}^n
+\tilde{Z}_{ik}
+\left[
+-\sigma_k^2
++
+(x_i-\mu_k)^2
+\right]
+=
+0.
+\end{equation*}
+
+Therefore,
+\begin{equation*}
+\sum_{i=1}^n
+\tilde{Z}_{ik}(x_i-\mu_k)^2
+=
+\sigma_k^2
+\sum_{i=1}^n\tilde{Z}_{ik}.
+\end{equation*}
+
+Using
+\begin{equation*}
+n_k=\sum_{i=1}^n\tilde{Z}_{ik},
+\end{equation*}
+we obtain
+\begin{equation*}
+\sum_{i=1}^n
+\tilde{Z}_{ik}(x_i-\mu_k)^2
+=
+n_k\sigma_k^2.
+\end{equation*}
+
+Hence,
+\begin{equation*}
+\boxed{
+\hat{\sigma}_k^2
+=
+\frac{1}{n_k}
+\sum_{i=1}^n
+\tilde{Z}_{ik}(x_i-\hat{\mu}_k)^2
+}.
+\end{equation*}
+
+Thus, the maximum likelihood estimator of $\sigma_k^2$ is the
+\hl{average squared deviation from the estimated group mean},
+calculated using only the observations belonging to group $k$.
+
+\subsubsection*{Summary of the Three Estimators}
+
+For a one-dimensional Gaussian mixture with known group memberships,
+the maximum likelihood estimators are
+\begin{equation*}
+\boxed{
+\hat{p}_k
+=
+\frac{n_k}{n}
+}
+\end{equation*}
+\begin{equation*}
+\boxed{
+\hat{\mu}_k
+=
+\frac{1}{n_k}
+\sum_{i=1}^n
+\tilde{Z}_{ik}x_i
+}
+\end{equation*}
+and
+\begin{equation*}
+\boxed{
+\hat{\sigma}_k^2
+=
+\frac{1}{n_k}
+\sum_{i=1}^n
+\tilde{Z}_{ik}(x_i-\hat{\mu}_k)^2
+}.
+\end{equation*}
+
+In other words,
+\begin{equation*}
+\boxed{
+\begin{aligned}
+\hat{p}_k
+&=\text{proportion of observations in group }k,\\[2mm]
+\hat{\mu}_k
+&=\text{mean of the observations in group }k,\\[2mm]
+\hat{\sigma}_k^2
+&=\text{variance of the observations in group }k.
+\end{aligned}
+}
+\end{equation*}
+
+These are exactly the usual empirical estimators applied separately
+within each group.

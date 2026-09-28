@@ -1,0 +1,185 @@
+\section{Classification}
+
+\subsection{Classification Rule}
+
+A \hl{classification rule} assigns each observation $\mathbf{x}\in E$ to one
+of the $K$ groups:
+
+$$
+r:E\rightarrow\{1,\ldots,K\}.
+$$
+
+The rule is equivalent to partitioning the feature space $E$ into $K$
+regions:
+
+$$
+\Omega_k=\{\mathbf{x}\in E:r(\mathbf{x})=k\},
+$$
+
+so that
+
+$$
+E=\bigcup_{k=1}^K\Omega_k,
+\qquad
+\Omega_k\cap\Omega_l=\varnothing\quad(k\neq l).
+$$
+
+\textbf{Interpretation:} $\Omega_k$ is the region of feature space that the
+classifier assigns to group $k$.
+
+\subsection{Classification Errors}
+
+If an observation truly belongs to group $G_k$, the probability of classifying
+it as group $G_l$ ($l\neq k$) is
+
+$$
+\boxed{
+P(r(\mathbf{X})=l\mid Z=k)
+=
+P(\mathbf{X}\in\Omega_l\mid Z=k)
+=
+\int_{\Omega_l}f_k(\mathbf{x})\,d\mathbf{x}
+}
+$$
+
+The probability of misclassifying an observation from group $G_k$ is
+
+$$
+\boxed{
+P(r(\mathbf{X})\neq k\mid Z=k)
+=
+\sum_{l\neq k}P(r(\mathbf{X})=l\mid Z=k)
+}
+$$
+
+The \hl{global probability of misclassification} (global classification
+error) is
+
+$$
+\boxed{
+P(r(\mathbf{X})\neq Z)
+=
+\sum_{k=1}^K
+p_kP(r(\mathbf{X})\neq k\mid Z=k)
+}
+$$
+
+\subsection{Cost and Risk}
+
+Let $C_{kl}$ be the cost of classifying an observation from true group
+$G_l$ as group $G_k$. Usually,
+
+$$
+C_{kk}=0.
+$$
+
+The \hl{conditional risk} of assigning an observation $\mathbf{x}$ to group
+$k$ is the expected cost:
+
+$$
+\boxed{
+R(k\mid\mathbf{x})
+=
+\sum_{l=1}^K
+C_{kl}P(Z=l\mid\mathbf{X}=\mathbf{x})
+}
+$$
+
+The \hl{average risk} of a classification rule $r$ is
+
+$$
+\boxed{
+R(r)=\mathbb{E}[C_{r(\mathbf{X}),Z}]
+}
+$$
+
+\textbf{Interpretation:}
+
+$$
+\boxed{
+\text{Risk}=\text{expected cost of classification errors}
+}
+$$
+
+\subsection{Bayes Optimal Classification Rule}
+
+The \hl{Bayes optimal rule} is the rule that minimizes the average risk:
+
+$$
+\boxed{
+r^*=\arg\min_r R(r)
+}
+$$
+
+Equivalently, for each observation $\mathbf{x}$, choose the group with the
+smallest conditional risk:
+
+$$
+\boxed{
+r^*(\mathbf{x})
+=
+\arg\min_k R(k\mid\mathbf{x})
+}
+$$
+
+\subsection{Bayes Rule with Equal Costs}
+
+If every incorrect classification has the same cost,
+
+$$
+C_{kl}=
+\begin{cases}
+0 & k=l,\\
+1 & k\neq l,
+\end{cases}
+$$
+
+then minimizing conditional risk is equivalent to maximizing the posterior
+probability:
+
+$$
+\boxed{
+r^*(\mathbf{x})
+=
+\arg\max_k P(Z=k\mid\mathbf{x})
+}
+$$
+
+Using Bayes' theorem,
+
+$$
+P(Z=k\mid\mathbf{x})
+=
+\frac{p_kf_k(\mathbf{x})}
+{\displaystyle\sum_{l=1}^Kp_lf_l(\mathbf{x})},
+$$
+
+so equivalently,
+
+$$
+\boxed{
+r^*(\mathbf{x})
+=
+\arg\max_k p_kf_k(\mathbf{x})
+}
+$$
+
+\subsection{Bayes Rule for Two Groups}
+
+For $K=2$:
+
+$$
+r^*(\mathbf{x})=
+\begin{cases}
+1 & \text{if }p_1f_1(\mathbf{x})>p_2f_2(\mathbf{x}),\\
+2 & \text{otherwise.}
+\end{cases}
+$$
+
+The decision boundary is given by
+
+$$
+\boxed{
+p_1f_1(\mathbf{x})=p_2f_2(\mathbf{x})
+}
+$$

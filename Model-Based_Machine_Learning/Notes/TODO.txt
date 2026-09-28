@@ -1,0 +1,24 @@
+Liste TODO :
+Classification supervisée
+☐ Implémenter un algorithme de classification pour des données gaussiennes multivariées.
+☐ Utiliser le modèle estimé pour prédire la classe d'une nouvelle observation.
+
+Clustering / classification non supervisée
+☐ Implémenter un algorithme de clustering dans le cas où Z n'est pas connu.
+☐ Bien distinguer le cas classification (Z connu) du cas clustering (Z inconnu).
+
+Estimation MLE d'un GMM
+☐ Implémenter un algorithme MLE pour un Gaussian Mixture Model (GMM).
+☐ À partir du GMM estimé, pouvoir attribuer une nouvelle observation à une composante/classe.
+
+Estimation EM d'un GMM multivarié
+☐ Implémenter un algorithme EM pour estimer un modèle de mélange gaussien multivarié.
+☐ Tester plusieurs initialisations aléatoires.
+☐ Tester une initialisation obtenue par k-means.
+☐ Comparer les résultats des différentes initialisations.
+
+Choix du modèle / clustering
+☐ Introduire des critères de choix de modèles dans l'algorithme de clustering.
+☐ Étudier/utiliser CEM (Classification EM).
+☐ Étudier/utiliser SEM (Stochastic EM).
+☐ Clarifier la place de k-means dans cette partie.
