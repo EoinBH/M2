@@ -1,0 +1,39 @@
+\section{Annales}
+\subsection{2021}
+Nous nous intéressons au temps $X$ d’attente (en minutes) de clients sur le standard téléphonique de leur fournisseur internet, modélisé par une loi exponentielle de densité :
+
+\[
+f(x) = 
+\begin{cases}
+	\lambda e^{-\lambda x} & \text{si } x \geq 0 \\
+	0             & \text{sinon.}
+\end{cases}
+\]
+
+\subsubsection{Clustering}
+Nous considérons un échantillon $\underline{X} = (X_i)_{i=1,\dots,n}$, et nous souhaitons dans un premier temps réaliser un clustering de ces données en $K$ clusters.
+
+\begin{enumerate}
+	\item Écrire la vraisemblance $L(\theta, \underline{X})$ du modèle de mélange de lois exponentielles de paramètre  $\theta = (\pi_k, \lambda_k)_{1 \leq k \leq K}$ pour l’échantillon $\underline{X}$, où $\pi_k$ est la proportion du cluster $k$ dans le mélange, et $1/\lambda_k$ l’espérance du temps d’attente pour le cluster $k$.
+	\item Pouvez-vous maximiser analytiquement cette vraisemblance ? Si non pourquoi ?
+	\item Considérons $Z_i = (Z_{ik})_{1 \leq k \leq K}$ la variable indiquant à quel cluster l’observation $i$ appartient ($Z_{ik}=1$ si l’observation i appartient au cluster $k$, 0 sinon), et $\underline{Z} = (Z_i)_{i=1,\dots,n}$. La loi de chaque $Z_i$ est une $\mathcal{M}(1, \pi_1,\dots,\pi_K)$. Écrire la vraisemblance complétée $L(\theta,\underline{X},\underline{Z})$, ainsi que son logarithme.
+	\item Donner et démontrer les expressions des paramètres $\theta$ maximisant la vraisemblance complétée.
+	\item Proposer un algorithme EM pour maximiser la vraisemblance $L(\theta, \underline{X})$, en détaillant les calculs nécessaires aux différentes étapes de cet algorithme.
+	\item Quel critère utilisez vous pour arrêter votre algorithme ? Donner le détail de la valeur de ce critère.
+	\item Peut-on choisir $K$ par maximum de vraisemblance ? Si oui, donnez l’expression analytique du maximum de vraisemblance. Si non, proposez un critère utilisable et donner son expression analytique.
+\end{enumerate}
+
+\subsubsection{Classification}
+Il s’avère que les temps d’attente $X = (X_i)_{i=1,\dots,n}$ étudiés ci-dessus provenaient de clients de deux opérateurs téléphoniques $A$ et $B$. Nous disposons donc en plus des temps $X_i$ de la variable aléatoire $Z_i=(Z_{i1},Z_{i2})$ avec $Z_i=(1, 0)$ si l’individu $i$ est client de l’opérateur $A$, et $Z_i=(0, 1)$ si l’individu $i$ est client de l’opérateur $B$. On suppose que $Z_i \sim \mathcal{M}(1, 1/2, 1/2)$.
+
+\begin{enumerate}
+	\item Quelle est la densité de probabilité marginale de $X_i$ ?
+	\item Écrire la vraisemblance du modèle de mélange de lois exponentielles de paramètre $\theta=(\lambda_1,\lambda_2)$ pour l’échantillon $(\underline{X}, \underline{Z})$.
+	\item Calculer l’estimateur du maximum de vraisemblance de $\theta$.
+	\item Supposons cette fois que l’on dispose d’une estimation $\hat{\theta}$ de $\theta$. Comment classer une nouvelle observation $x^*$ par la règle du maximum a posteriori pour ce modèle ?
+	\item On suppose désormais que $\hat{\theta}=(1/3, 1/4)$.
+	\begin{enumerate}[label=(\alph*)]
+		\item Quelle est la probabilité d’un client de l’opérateur $A$ attende plus de 2 minutes ? Et pour l’opérateur $B$ ?
+		\item Quelle est la probabilité qu’un client qui attend 2 minutes soit client de l’opérateur $A$ ?
+	\end{enumerate}
+\end{enumerate}

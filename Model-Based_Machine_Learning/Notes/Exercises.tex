@@ -1,0 +1,315 @@
+\section{Exercises}
+
+\subsection{Poisson Distribution}
+
+\[
+\text{PMF:} f(x \mid \theta)= \sum_{k=1}^K \pi_k * (\frac{\lambda_k^x}{x!} e^{-\lambda_k})
+\]
+
+\[
+L(\theta) = \prod_{i=1}^n f(x_i \mid \theta) = \prod_{i=1}^{n} \sum_{k=1}^K \pi_k (\frac{\lambda_k^{x_i}}{x_i!} e^{-\lambda_k})
+\]
+
+\[
+\ell(\theta) = \log L(\theta) = \sum_{i=1}^{n} \log(\sum_{k=1}^K \pi_k (\frac{\lambda_k^{x_i}}{x_i!} e^{-\lambda_k}))
+\]
+
+\[
+L_c(\theta \mid X, Z) = \prod_{i=1}^n \prod_{k=1}^K [\pi_k f(x_i \mid \theta_k)]^{\tilde{Z}_{ik}}
+\]
+
+\[
+= \prod_{i=1}^n \prod_{k=1}^K [\pi_k (\frac{\lambda_k^{x_i}}{x_i!} e^{-\lambda_k})]^{\tilde{Z}_{ik}}
+\]
+%log:
+\[
+\ell_c(\theta \mid X, Z) = \sum_{i=1}^n \sum_{k=1}^K \tilde{Z}_{ik} [\log \pi_k + \log f(x_i \mid \theta_k)]
+\]
+
+\[
+= \sum_{i=1}^n \sum_{k=1}^K \tilde{Z}_{ik} [\log \pi_k + \log (\frac{\lambda_k^{x_i}}{x_i!} e^{-\lambda_k})]
+\]
+
+\[
+= \sum_{i=1}^n \sum_{k=1}^K \tilde{Z}_{ik} [\log \pi_k + \log (\frac{\lambda_k^{x_i}}{x_i!}) + \log (e^{-\lambda_k}))]
+\]
+
+\[
+= \sum_{i=1}^n \sum_{k=1}^K \tilde{Z}_{ik} [\log \pi_k + \log (\lambda_k^{x_i}) - \log (x_i!) + \log (e^{-\lambda_k}))]
+\]
+
+\[
+= \sum_{i=1}^n \sum_{k=1}^K \tilde{Z}_{ik} [\log \pi_k + x_i\log \lambda_k - \sum_{j=1}^{x_i} \log j - \lambda_k]
+\]
+
+\subsection{Estimation of the Mixing Proportions $\pi_k$}
+
+The mixing proportions satisfy the constraint
+\[
+\sum_{k=1}^K\pi_k=1.
+\]
+
+Equivalently,
+\[
+\sum_{k=1}^K\pi_k-1=0.
+\]
+
+We can write
+\[
+\sum_{k=1}^K\pi_k-1=\psi(x).
+\]
+
+To find the extremum of a function $\phi(x)$ under the constraint
+\[
+\psi(x)=0,
+\]
+we introduce a Lagrange multiplier $\nu$ and optimize
+\[
+F(x,\nu) = \phi(x)+\nu\psi(x).
+\]
+
+In our case, we therefore define the Lagrangian
+\[
+F(\theta,\nu) = \ell_c(\theta \mid X, Z) + \nu \left(\sum_{k=1}^K\pi_k -1 \right).
+\]
+
+We use the conditions
+\[
+\frac{\partial F}{\partial \pi_k}=0,
+\qquad
+\frac{\partial F}{\partial\nu}=0.
+\]
+
+When differentiating with respect to $\pi_k$, all terms that do not
+depend on $\pi_k$ can be ignored. Therefore,
+\[
+F = \sum_{k=1}^K \left(\sum_{i=1}^n\tilde{Z}_{ik} \right)\ln \pi_k + \nu \left(\sum_{k=1}^K\pi_k -1 \right) + \text{terms independent of the }\pi_k.
+\]
+
+Define
+\[
+n_k = \sum_{i=1}^n\tilde{Z}_{ik},
+\]
+where $n_k$ is the number of observations belonging to group $k$.
+
+\[
+F = \sum_{k=1}^K n_k \log \pi_k + \nu \left(\sum_{k=1}^K\pi_k \right) -\nu + \text{constant}.
+\]
+
+Thus, the part of the Lagrangian that depends on the mixing
+proportions becomes
+\[
+F = \sum_{k=1}^K n_k \log \pi_k + \nu \left(\sum_{k=1}^K\pi_k \right) + \text{constant}.
+\]
+
+\paragraph{Step 1: Differentiate with respect to $\pi_k$.}
+
+For a fixed group $k$,
+\[
+F = \sum_{j=1}^K n_j \log \pi_j + \nu \left(\sum_{j=1}^K\pi_j \right) + \text{constant}.
+\]
+
+\[
+\frac{\partial F}{\partial \pi_k} = n_k * \frac{1}{\pi_k} + \nu = \frac{n_k}{\pi_k} + \nu.
+\]
+
+At the optimum,
+\[
+\frac{n_k}{\pi_k}+\nu=0.
+\]
+
+Therefore,
+\[
+\pi_k=\frac{n_k}{-\nu}.
+\]
+
+\paragraph{Step 2: Differentiate with respect to $\nu$.}
+
+The derivative with respect to the Lagrange multiplier gives back the constraint:
+\[
+\frac{\partial F}{\partial\nu} = \sum_{k=1}^K\pi_k - 1= 0.
+\]
+
+Therefore,
+\[
+\sum_{k=1}^K\pi_k=1.
+\]
+
+Substituting
+\[
+\pi_k=\frac{n_k}{-\nu}
+\]
+into the constraint gives
+\[
+\sum_{k=1}^K\frac{n_k}{-\nu}=1.
+\]
+Since $-\nu$ is independent of $k$,
+\[
+\frac{1}{-\nu}\sum_{k=1}^{K}n_k = 1
+\]
+
+And since every observation belongs to exactly one group,
+\[
+\sum_{k=1}^Kn_k=n.
+\]
+
+Therefore,
+\[
+\frac{n}{-\nu}=1
+\qquad\Longrightarrow\qquad
+\nu=-n.
+\]
+
+Hence,
+\[
+\boxed{
+\hat{\pi}_k=\frac{n_k}{n}
+}.
+\]
+
+Since
+\[
+n_k=\sum_{i=1}^n\tilde{Z}_{ik},
+\]
+we can equivalently write
+\[
+\boxed{
+\hat{\pi}_k=\frac{1}{n}\sum_{i=1}^n\tilde{Z}_{ik}
+}.
+\]
+
+Thus, the estimated mixing proportion of group $k$ is simply the
+\hl{proportion of observations belonging to group $k$}.
+
+\subsection{Estimation of $\lambda_k$}
+
+Unlike the mixing proportions, $\lambda_k$ is not subject to a constraint. Therefore, we can directly differentiate the completed log-likelihood with respect to $\lambda_k$.
+
+Starting from
+\[
+\ell_c(\theta \mid X, Z) = \sum_{i=1}^n \sum_{k=1}^K \tilde{Z}_{ik} [\log \pi_k + x_i\log \lambda_k - \sum_{j=1}^{x_i} \log j - \lambda_k]
+\]
+
+we only keep the terms that depend on $\lambda$
+\[
+\ell_c(\theta \mid X, Z) = \sum_{i=1}^n \sum_{k=1}^K \tilde{Z}_{ik} [x_i\log \lambda_k - \lambda_k] + \text{constant}
+\]
+
+\paragraph{Step 1: Differentiate with respect to $\lambda_k$.}
+
+For a fixed group $k$, we have
+\[
+\ell_c(\theta \mid X, Z) = \sum_{i=1}^n \tilde{Z}_{ik} [x_i\log \lambda_k - \lambda_k] + \text{constant}.
+\]
+
+Differentiating with respect to $\lambda_k$ gives
+\[
+\frac{\partial \ell_c}{\partial \lambda_k}
+=
+\sum_{i=1}^n \tilde{Z}_{ik}
+\left[
+\frac{x_i}{\lambda_k}-1
+\right].
+\]
+
+At the optimum,
+\[
+\frac{\partial \ell_c}{\partial \lambda_k}=0.
+\]
+
+Therefore,
+\[
+\sum_{i=1}^n \tilde{Z}_{ik}
+\left[
+\frac{x_i}{\lambda_k}-1
+\right]
+=0.
+\]
+
+Expanding the sum gives
+\[
+\frac{1}{\lambda_k}\sum_{i=1}^n \tilde{Z}_{ik}x_i
+-
+\sum_{i=1}^n \tilde{Z}_{ik}
+=0.
+\]
+
+Therefore,
+\[
+\frac{1}{\lambda_k}\sum_{i=1}^n \tilde{Z}_{ik}x_i
+=
+\sum_{i=1}^n \tilde{Z}_{ik}.
+\]
+
+Multiplying both sides by $\lambda_k$ gives
+\[
+\sum_{i=1}^n \tilde{Z}_{ik}x_i
+=
+\lambda_k
+\sum_{i=1}^n \tilde{Z}_{ik}.
+\]
+
+Therefore,
+\[
+\lambda_k
+=
+\frac{\sum_{i=1}^n \tilde{Z}_{ik}x_i}
+{\sum_{i=1}^n \tilde{Z}_{ik}}.
+\]
+
+Since
+\[
+n_k=\sum_{i=1}^n\tilde{Z}_{ik},
+\]
+we can write
+\[
+\boxed{
+\hat{\lambda}_k
+=
+\frac{1}{n_k}
+\sum_{i=1}^n\tilde{Z}_{ik}x_i
+}.
+\]
+
+Thus, the estimated Poisson parameter for group $k$ is the
+mean of the observations belonging to group $k$.
+
+\paragraph{Step 2: Verify that the stationary point is a maximum.}
+
+The second derivative with respect to $\lambda_k$ is
+\[
+\frac{\partial^2\ell_c}{\partial\lambda_k^2}
+=
+-\sum_{i=1}^n
+\tilde{Z}_{ik}
+\frac{x_i}{\lambda_k^2}.
+\]
+
+Since
+\[
+\tilde{Z}_{ik}\geq 0,
+\qquad
+x_i\geq 0,
+\qquad
+\lambda_k>0,
+\]
+we have
+\[
+\frac{\partial^2\ell_c}{\partial\lambda_k^2}
+\leq 0.
+\]
+
+Therefore, the stationary point corresponds to a maximum.
+
+Hence,
+\[
+\boxed{
+\hat{\lambda}_k
+=
+\frac{\sum_{i=1}^n\tilde{Z}_{ik}x_i}
+{\sum_{i=1}^n\tilde{Z}_{ik}}
+}.
+\]
+
+That is, the MLE of $\lambda_k$ is the sample mean of the
+observations assigned to component $k$.
